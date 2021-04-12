@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tugas9/service/http_service.dart';
+import 'package:tugas9/pages/movie_detail.dart';
 
 class MovieList extends StatefulWidget{
   @override
   _MovieListState createState() => _MovieListState();
 }
-
+ 
 class _MovieListState extends State<MovieList>{
   int moviesCount;
   List movies;
@@ -40,11 +41,17 @@ class _MovieListState extends State<MovieList>{
             color: Colors.white,
             elevation: 2.0,
             child: ListTile(
-              leading: Image.network('https://image.tmdb.org/t/p/w500/' +  movies[position].posterPath),
+              leading: Image.network('https://image.tmdb.org/t/p/w500/' +  movies[position].posterPath), //menambah gambar dari response api
               title: Text(movies[position].title),
               subtitle: Text(
                 'Rating = ' + movies[position].voteAverage.toString(),
               ),
+              onTap: () {
+                MaterialPageRoute route = MaterialPageRoute(
+                  builder: (_) => MovieDetail(movies[position])
+                );
+                Navigator.push(context, route);
+              },
             ),
           );
         },
