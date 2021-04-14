@@ -11,6 +11,7 @@ class _MovieListState extends State<MovieList>{
   int moviesCount;
   List movies;
   HttpService service;
+  String imgPath = 'https://image.tmdb.org/t/p/w500/'; //untuk menambah gambar
 
   Future initialize() async {
     movies = [];
@@ -34,17 +35,23 @@ class _MovieListState extends State<MovieList>{
       appBar: AppBar(
         title: Text("Popular Movies"),
       ),
-      body: ListView.builder(
+      body: GridView.builder( //menampilkan gambar dalam bentuk grid
         itemCount: (this.moviesCount == null) ? 0 : this.moviesCount,
-        itemBuilder: (context, int position) {
-          return Card(
-            color: Colors.white,
-            elevation: 2.0,
-            child: ListTile(
-              leading: Image.network('https://image.tmdb.org/t/p/w500/' +  movies[position].posterPath), //menambah gambar dari response api
-              title: Text(movies[position].title),
-              subtitle: Text(
-                'Rating = ' + movies[position].voteAverage.toString(),
+        padding: const EdgeInsets.all(20),
+
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          childAspectRatio: 2 / 3,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 20.0,
+        ),
+        itemBuilder: (context, int position){
+          return GridTile(
+            child: InkResponse(
+              enableFeedback: true,
+              child: Image.network( //menampilkan gambar pada halaman utama
+                imgPath + movies[position].posterPath,
+                fit: BoxFit.cover,
               ),
               onTap: () {
                 MaterialPageRoute route = MaterialPageRoute(
@@ -55,7 +62,7 @@ class _MovieListState extends State<MovieList>{
             ),
           );
         },
-      ),
-      );
+      )
+    );
   }
 }

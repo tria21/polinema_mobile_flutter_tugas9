@@ -19,7 +19,10 @@ class MovieDetail extends StatelessWidget{
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text(movie.title),
+        title: Text(
+          'Movie Detail',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -29,6 +32,33 @@ class MovieDetail extends StatelessWidget{
                 padding: EdgeInsets.all(16),
                 height: height / 1.5,
                 child: Image.network(path)
+              ),
+              Container(
+                child: Text(movie.title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.calendar_today),
+                    Text(movie.releaseDate,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star_border),
+                    Text(movie.voteAverage.toString(),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 child: Text(movie.overview),
